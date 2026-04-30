@@ -1,0 +1,25 @@
+# Dependências (nunca devem ir para o git)
+node_modules/
+jspm_packages/
+
+# Logs e arquivos de erro
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# Variáveis de ambiente (Segurança: contém senhas e chaves)
+.env.local
+.env.development.local
+
+# Build e saída (arquivos gerados automaticamente)
+dist/
+build/
+out/
+
+# Arquivos do Sistema Operacional e IDEs
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
