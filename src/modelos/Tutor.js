@@ -1,3 +1,4 @@
+// src/modelos/Tutor.js
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.js';
 
@@ -21,16 +22,24 @@ const Tutor = sequelize.define('Tutor', {
         type: DataTypes.STRING, 
         allowNull: false 
     },
+    // ATUALIZAÇÃO: Uso de ENUM para definir papéis fixos no sistema
     cargo: {
-        type: DataTypes.STRING,
-        defaultValue: 'tutor'
+        type: DataTypes.ENUM('tutor', 'ong', 'admin'),
+        defaultValue: 'tutor',
+        allowNull: false
     },
     // Token para recuperação de senha
-    reset_token: { type: DataTypes.STRING, allowNull: true },
-    reset_token_expira: { type: DataTypes.DATE, allowNull: true }
+    reset_token: { 
+        type: DataTypes.STRING, 
+        allowNull: true 
+    },
+    reset_token_expira: { 
+        type: DataTypes.DATE, 
+        allowNull: true 
+    }
 }, {
     tableName: 'tutores',
-    timestamps: false // MUDANÇA AQUI: Desativado para evitar o erro de ALTER TABLE
+    timestamps: false // Mantido desativado conforme sua última alteração
 });
 
 export default Tutor;
