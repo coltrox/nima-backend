@@ -1,4 +1,4 @@
-import Tutor from '../modelos/Tutor.js';
+import Tutor from '../modelos/Usuario.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { Op } from 'sequelize';

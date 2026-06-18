@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.js'; // Ajuste o caminho para seu arquivo de config do Sequelize
-import Tutor from './Tutor.js';
+import Tutor from './Usuario.js';
 
 const Questionario = sequelize.define('Questionario', {
     id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },

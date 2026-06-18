@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.js';
 
-const Tutor = sequelize.define('Tutor', {
+const Usuario = sequelize.define('Usuario', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -27,8 +27,8 @@ const Tutor = sequelize.define('Tutor', {
         allowNull: false 
     },
     cargo: {
-        type: DataTypes.ENUM('tutor', 'ong', 'admin'),
-        defaultValue: 'tutor',
+        type: DataTypes.ENUM('usuario', 'ong', 'desenvolvedor'), // Atualizado de 'tutor' para 'usuario'
+        defaultValue: 'usuario',
         allowNull: false
     },
     reset_token: { 
@@ -40,8 +40,8 @@ const Tutor = sequelize.define('Tutor', {
         allowNull: true 
     }
 }, {
-    tableName: 'tutores',
+    tableName: 'usuarios', // Mudado para refletir a tabela geral de usuários
     timestamps: false 
 });
 
-export default Tutor;
+export default Usuario;
