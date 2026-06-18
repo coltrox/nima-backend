@@ -1,4 +1,3 @@
-// src/modelos/Tutor.js
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.js';
 
@@ -18,17 +17,20 @@ const Tutor = sequelize.define('Tutor', {
         unique: true,
         validate: { isEmail: true }
     },
+    cpf: {
+        type: DataTypes.STRING(11),
+        allowNull: false,
+        unique: true
+    },
     senha: { 
         type: DataTypes.STRING, 
         allowNull: false 
     },
-    // ATUALIZAÇÃO: Uso de ENUM para definir papéis fixos no sistema
     cargo: {
         type: DataTypes.ENUM('tutor', 'ong', 'admin'),
         defaultValue: 'tutor',
         allowNull: false
     },
-    // Token para recuperação de senha
     reset_token: { 
         type: DataTypes.STRING, 
         allowNull: true 
@@ -39,7 +41,7 @@ const Tutor = sequelize.define('Tutor', {
     }
 }, {
     tableName: 'tutores',
-    timestamps: false // Mantido desativado conforme sua última alteração
+    timestamps: false 
 });
 
 export default Tutor;

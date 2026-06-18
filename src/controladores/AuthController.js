@@ -8,20 +8,27 @@ const JWT_SECRET = process.env.JWT_SECRET || 'nima_secret_key_2026';
 export const AuthController = {
     register: async (req, res) => {
         try {
-            // Agora pegamos o 'cargo' diretamente do corpo da requisição (JSON)
-            const { username, email, password, cargo } = req.body;
+            // Mapeia de acordo com os parâmetros enviados pelo aplicativo mobile
+            const { nome, email, cpf, password, cargo } = req.body;
             console.log(`[BACKEND] Tentativa de registro: ${email} como ${cargo || 'tutor'}`);
 
-            const existe = await Tutor.findOne({ where: { email } });
-            if (existe) return res.status(400).json({ message: "E-mail já cadastrado" });
+            // Verifica duplicidade de e-mail
+            const existeEmail = await Tutor.findOne({ where: { email } });
+            if (existeEmail) return res.status(400).json({ message: "E-mail já cadastrado" });
+
+            // Verifica duplicidade de CPF antes de tentar a inserção
+            if (cpf) {
+                const existeCpf = await Tutor.findOne({ where: { cpf } });
+                if (existeCpf) return res.status(400).json({ message: "CPF já cadastrado no sistema" });
+            }
 
             const hashedPassword = await bcrypt.hash(password, 10);
             
             const novoUsuario = await Tutor.create({
-                nome: username,
+                nome,
                 email,
+                cpf,
                 senha: hashedPassword,
-                // Se o cargo não for enviado no JSON, ele assume 'tutor' por padrão
                 cargo: cargo || 'tutor' 
             });
 
@@ -39,6 +46,8 @@ export const AuthController = {
     login: async (req, res) => {
         try {
             const { email, password } = req.body;
+            
+            // Permite login por email ou buscando pelo nome exato informado
             const tutor = await Tutor.findOne({ 
                 where: { [Op.or]: [{ email: email }, { nome: email }] } 
             });
@@ -59,7 +68,7 @@ export const AuthController = {
                     id: tutor.id, 
                     nome: tutor.nome, 
                     email: tutor.email,
-                    cargo: tutor.cargo // Retorna o cargo para o redirecionamento no front
+                    cargo: tutor.cargo 
                 } 
             });
         } catch (error) {
@@ -71,7 +80,7 @@ export const AuthController = {
     getProfile: async (req, res) => {
         try {
             const tutor = await Tutor.findByPk(req.userId, {
-                attributes: ['id', 'nome', 'email', 'cargo']
+                attributes: ['id', 'nome', 'email', 'cargo', 'cpf']
             });
             if (!tutor) return res.status(404).json({ message: "Usuário não encontrado" });
             res.json(tutor);
