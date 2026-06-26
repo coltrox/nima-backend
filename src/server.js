@@ -19,7 +19,7 @@ async function iniciar() {
         // Inicializa o servidor Express
         app.listen(PORT, '0.0.0.0', () => {
             console.log(`🚀 Servidor backend rodando na porta ${PORT}`);
-            console.log(`🔗 API base ativa em: http://172.17.1.98:${PORT}`);
+            console.log(`🔗 API base ativa em: http://localhost:${PORT}`);
         });
     } catch (error) {
         console.error('❌ Falha crítica ao iniciar banco:', error);
